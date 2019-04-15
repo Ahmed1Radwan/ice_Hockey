@@ -8,14 +8,16 @@ public class Finder {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		String[] str = new String[10000];
-		str[1] = sc.next();
+		System.out.println("Enter String Array space them by Enter last input of string element put . like (11111.) this is the last input");
+		str[0] = sc.next();
 		int teamNum;
 		int threshold;
-		int i = 1;
+		int i = 0;
 		while (str[i].charAt(str[i].length() - 1) != '.') {
 			i++;
 			str[i] = sc.next();
 		}
+		System.out.println("enter team and threshold");
 		teamNum=sc.nextInt();
 		threshold=sc.nextInt();
 		IPlayersFinder finder=new photo();
