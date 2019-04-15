@@ -52,8 +52,9 @@ public class photo implements IPlayersFinder{
 				min_Y = 10000;
 				char t = photo[i].charAt(j);
 				Point a = new Point(i, j);
-				team = (char) (team + '0');
-				if (t == team && !Points.contains(a)) {
+				int q = team;
+				q = (char) (q + '0');
+				if (t == q && !Points.contains(a)) {
 					posDirections(i, j, photo, t);
 					if (area >= threshold) {
 						int x = (((max_X + min_X)/2)+2);
