@@ -13,52 +13,51 @@ public class photo implements IPlayersFinder{
 	 static int max_Y = -1;
 	 static int min_Y = 10000;
 	
-	public void posDirections(int i, int j, String[] photo, char team) {
-		Point p = new Point(i, j);
-		if (photo[i] == null) return;
-		
-		if (j >= photo[1].length() || j < 0) return;
+	public void pos(int i,int j,String[] photo,char team) {
+		 
+		 	Point p = new Point(i, j);
+		 	if(i < 0) return;
+			if (photo[i] == null) return;
+			
+			if (j >= photo[1].length() || j < 0) return;
 
-		if (photo[i].charAt(j) != team) return;
-		
-		if (Points.contains(p)) return;
-		
-		max_X = Math.max(2 * (j - 1) + 2, max_X);
-		max_Y = Math.max(2 * i, max_Y);
-		min_X = Math.min(2 * (j - 1), min_X);
-		min_Y = Math.min(2 * i - 2, min_Y);
-		
-		Points.add(p);
-		area += 4;
-		
-		posDirections(i + 1, j, photo, team);
-		posDirections(i - 1, j, photo, team);
-		posDirections(i, j + 1, photo, team);
-		posDirections(i, j - 1, photo, team);
-
-	}
-	@Override
+			if (photo[i].charAt(j) != team) return ;
+			
+			if (Points.contains(p)) return;
+			
+			Points.add(p);
+			area += 4;
+			
+			pos(i + 1, j, photo, team);
+			max_X = Math.max(max_X, i);
+			pos(i - 1, j, photo, team);
+			min_X = Math.min(min_X, i);
+			pos(i, j + 1, photo, team);
+			max_Y = Math.max(max_Y, j);
+			pos(i, j - 1, photo, team);
+			min_Y = Math.min(min_Y, j);
+			return;
+	 }
 	public Point[] findPlayers(String[] photo, int team, int threshold) {
 		// TODO Auto-generated method stub
 		Point[] ans = new Point[1000];
 		int count = 0;
-		int i = 1;
+		int i = 0;
 		while (photo[i] != null) {
 			for (int j = 0; j < photo[i].length(); j++) {
-				area = 0;
-				max_X = -1;
-				min_X = 10000;
-				max_Y = -1;
-				min_Y = 10000;
+
 				char t = photo[i].charAt(j);
 				Point a = new Point(i, j);
-				int q = team;
-				q = (char) (q + '0');
+				char q = (char) (team+'0');
 				if (t == q && !Points.contains(a)) {
-					posDirections(i, j, photo, t);
+					min_Y = j;
+					min_X = i;
+					max_X = -1;
+					max_Y = -1;
+					pos(i,j,photo,t);
 					if (area >= threshold) {
-						int x = (((max_X + min_X)/2)+2);
-						int y = (max_Y + min_Y) / 2 ;
+						int y = (max_X + min_X +1);
+						int x = (min_Y + max_Y +1);
 						ans[count] = new Point(x,y);
 						count++;
 					}
