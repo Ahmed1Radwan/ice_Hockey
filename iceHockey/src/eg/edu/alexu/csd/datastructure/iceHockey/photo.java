@@ -54,6 +54,7 @@ public class photo implements IPlayersFinder{
 					min_X = i;
 					max_X = -1;
 					max_Y = -1;
+					area =0;
 					pos(i,j,photo,t);
 					if (area >= threshold) {
 						int y = (max_X + min_X +1);
